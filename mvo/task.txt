@@ -1,3 +1,5 @@
 1. Create the file for tasks.
-2. Зміни
+3. Max's changes
+2. Зміни (here conflict)
 2. Зміни Ладіслави
+one more line
