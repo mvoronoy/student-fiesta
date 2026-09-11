@@ -58,3 +58,6 @@ git push origin main
 Якщо конфлікт виник, то треба скорегувати суспільний файл та повторити кроки 4.1 - 4.4
 
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
+
+
+[KaterynaKulak](KaterynaKulak/hello.txt)
