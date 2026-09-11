@@ -1,7 +1,7 @@
 from utility import genious_mathematics
 
 print("Hello world!")
-print("Hello - 123 changed!!")
+print("Hello - changed!!")
 
 if 1==0:
   print("Impossible")
