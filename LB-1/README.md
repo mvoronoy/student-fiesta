@@ -22,7 +22,6 @@ git pull origin main
 слід у вигляді "прізвище у квадратних дужках"+"ваш файл у круглих дужках": 
 ```
    [Прізвище](тека/ваш-файл-з-привітанням)
-   
 ```
 Наприклад в моєму випадку ```[MaxVoronoy](MaxVoronoy/helllo.txt)```
 
@@ -58,5 +57,11 @@ git push origin main
 
 Якщо конфлікт виник, то треба скорегувати суспільний файл та повторити кроки 4.1 - 4.4
 
+
+[KseniiaMoskalenko](KseniiaMoskalenko/hello.txt)
+
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
+
+[KaterynaKulak](KaterynaKulak/hello.txt)
+
 [LisaMykhasiuk](LisaMykhasiuk/hello.txt)
