@@ -57,6 +57,9 @@ git push origin main
 
 Якщо конфлікт виник, то треба скорегувати суспільний файл та повторити кроки 4.1 - 4.4
 
+
+[KseniiaMoskalenko](KseniiaMoskalenko/hello.txt)
+
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
 
 [DanKopylov](DanKopylov/hello.txt)
