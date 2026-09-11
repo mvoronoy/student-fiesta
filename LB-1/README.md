@@ -22,6 +22,7 @@ git pull origin main
 слід у вигляді "прізвище у квадратних дужках"+"ваш файл у круглих дужках": 
 ```
    [Прізвище](тека/ваш-файл-з-привітанням)
+   [LisaMykhasiuk](LisaMykhasiuk/hello.txt)
 ```
 Наприклад в моєму випадку ```[MaxVoronoy](MaxVoronoy/helllo.txt)```
 
