@@ -2,7 +2,6 @@ from utility import genious_mathematics
 
 print("Hello world!")
 print("Hello - abc, changed!!")
-print("Third line")
 
 if 1==0:
   print("Impossible")
