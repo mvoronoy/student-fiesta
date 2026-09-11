@@ -57,6 +57,28 @@ git push origin main
 
 Якщо конфлікт виник, то треба скорегувати суспільний файл та повторити кроки 4.1 - 4.4
 
+
+[KseniiaMoskalenko](KseniiaMoskalenko/hello.txt)
+
+[ArturTodoruk](ArturTodoruk/hello_world.txt)
+[VerizhenkoOleksandr](VerizhenkoOleksandr/hello.)
+
+[KaterynaKulak](KaterynaKulak/hello.txt)
+
+[MakarenkoIllia](MakarenkoIllia/hello.txt)
+[OleksandraKhlypun](OleksandraKhlypun/hello.txt)
+
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
 
-[MaxVoronoy](MaxVoronoy/helllo.txt)
+[DanKopylov](DanKopylov/hello.txt)
+
+
+[SerhiiBukhtiiarov](SerhiiBukhtiiarov/hello.txt)
+
+[DenysKryvenko](DenKryvenko/hello.txt)
+
+[KuruloVoronkin](KuruloVoronkin/hello.txt)
+
+[IhorLevchenko](IhorLevchenko/hello.txt)
+
+[GuivanLiza](GuivanLiza/hello.txt)
