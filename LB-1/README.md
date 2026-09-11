@@ -79,4 +79,6 @@ git push origin main
 
 [KuruloVoronkin](KuruloVoronkin/hello.txt)
 
-[IhorLevchenko] (IhorLevchenko/hello.txt)
+[IhorLevchenko](IhorLevchenko/hello.txt)
+
+[GuivanLiza](GuivanLiza/hello.txt)
