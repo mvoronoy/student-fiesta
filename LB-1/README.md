@@ -67,3 +67,6 @@ git push origin main
 
 [MakarenkoIllia](MakarenkoIllia/hello.txt)
 [OleksandraKhlypun](OleksandraKhlypun/hello.txt)
+
+
+[KuruloVoronkin](KuruloVoronkin/hello.txt)
