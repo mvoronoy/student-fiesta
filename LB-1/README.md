@@ -62,4 +62,8 @@ git push origin main
 
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
 
+[KaterynaKulak](KaterynaKulak/hello.txt)
+
+[ArturTodoruk](ArturTodoruk/hello_world.txt)
+
 [DanKopylov](DanKopylov/hello.txt)
