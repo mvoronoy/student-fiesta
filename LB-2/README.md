@@ -55,9 +55,20 @@ usecase "create an order" as cr
 ### Додати стрілки які описують всі залежності
 
 Деталі стрілок можна прочитати на сайті PlantUML: https://plantuml.com/use-case-diagram
+<table>
+<tr>
+<th>&nbsp;</th>
+<th>arrow</th>
+<th>PlantUML code</th>
+</tr>
+<tr>
+    <td>
+    ![Inherit](MaxVoronoy/Images/diagram-16887309538756556321.png)</td>
+    <td>Inherit</td>
+    <td> <pre><code>@startuml<br>:Admin:<br>User <|-- Admin<br>@enduml</code></pre> </td>
+</tr>
+</table>
 
-| x | arrow | code |
-| ![Inherit](MaxVoronoy/Images/diagram-16887309538756556321.png)| Inherit | <pre><code>@startuml<br>:Admin:<br>User <|-- Admin<br>@enduml</code></pre> |
 |Use|<pre><code>@startuml<br>:Admin:<br>(Login) <-- Admin<br>@enduml</code></pre> |
 |Association (Depends)|<pre><code>@startuml<br>(Login) <.. (Authentication)<br>@enduml</code></pre> |
 
