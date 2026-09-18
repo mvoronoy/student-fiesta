@@ -63,9 +63,38 @@ usecase "create an order" as cr
 </tr>
 <tr>
     <td>
-    ![Inherit](MaxVoronoy/Images/diagram-16887309538756556321.png)</td>
+    <img src="MaxVoronoy/Images/diagram-16887309538756556321.png" alt="Inherit"/></td>
     <td>Inherit</td>
-    <td> <pre><code>@startuml<br>:Admin:<br>User <|-- Admin<br>@enduml</code></pre> </td>
+    <td> <pre><code>
+    @startuml
+    :Admin:
+    User <|-- Admin
+    @enduml
+    </code></pre> 
+    </td>
+</tr>
+<tr>
+    <td><img src="MaxVoronoy/Images/diagram-7316668636780319134.png" alt="Use"/></td>
+    <td>Use</td>
+    <td>
+        <pre><code>
+        @startuml
+        :Admin:
+        (Login) <-- Admin
+        @enduml
+        </code></pre>
+    </td>
+</tr>
+<tr>
+    <td><img src="MaxVoronoy/Images/diagram-347500432402719411.png" alt="Association "/></td>
+    <td>Association (Depends)</td>
+    <td>
+        <pre><code>
+        @startuml
+        (Login) <.. (Authentication)
+        @enduml
+        </code></pre>
+    </td>
 </tr>
 </table>
 
