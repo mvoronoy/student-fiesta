@@ -98,10 +98,6 @@ User <|-- Admin
 </tr>
 </table>
 
-|Use|<pre><code>@startuml<br>:Admin:<br>(Login) <-- Admin<br>@enduml</code></pre> |
-|Association (Depends)|<pre><code>@startuml<br>(Login) <.. (Authentication)<br>@enduml</code></pre> |
-
-
 ## 3. Зробити зміни доступними для загалу
 
 На цей момент ви маєте 1 новий файл (`LB-2\MaxVoronoy\use-case.puml`) 
