@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+:Customer: as c
+:User:
+
+:User: <|-- c
+
+usecase Call
+
+c -> Call
+
+c -> (Add options)
+
+Call ... (Register Order)
+
+
+@enduml
