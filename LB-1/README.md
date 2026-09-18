@@ -71,4 +71,18 @@ git push origin main
 [ArturTodoruk](ArturTodoruk/hello_world.txt)
 
 [DanKopylov](DanKopylov/hello.txt)
+
+
+[SerhiiBukhtiiarov](SerhiiBukhtiiarov/hello.txt)
+
+[DenysKryvenko](DenKryvenko/hello.txt)
+
+[AnastasiiaKonoplia](AnastasiiaKonoplia/hello.txt)
+
+[KuruloVoronkin](KuruloVoronkin/hello.txt)
+
+[IhorLevchenko](IhorLevchenko/hello.txt)
+
+[GuivanLiza](GuivanLiza/hello.txt)
+
 [LisaMykhasiuk](LisaMykhasiuk/hello.txt)
