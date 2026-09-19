@@ -1,0 +1,48 @@
+@startuml
+
+actor Restaurant as R
+actor Courier as CR
+actor Customer as C
+
+rectangle "Food Delivery" {
+
+    usecase "Accept order" as U6
+    usecase "Prepare order" as U7
+    usecase "Replace ingredients" as U8
+
+    usecase "Pick up order" as U9
+    usecase "Deliver order" as U10
+    usecase "Update order status" as U11
+
+    usecase "Create order" as U1
+    usecase "Customize order" as U2
+    usecase "Pay for order" as U3
+    usecase "Cancel order" as U4
+    usecase "Track order" as U5
+
+    U8 ..> U7 : <<extend>>
+
+    U9 ..> U11 : <<include>>
+    U10 ..> U11 : <<include>>
+
+    U1 -[hidden]down- U4
+    U4 -[hidden]down- U5
+
+    U1 -[hidden]right- U2
+    U2 -[hidden]down- U3
+
+    U2 ..> U1 : <<extend>>
+    U3 ..> U1 : <<extend>>
+}
+
+R --> U6
+R --> U7
+
+CR --> U9
+CR --> U10
+
+C --> U1
+C --> U4
+C --> U5
+
+@enduml
