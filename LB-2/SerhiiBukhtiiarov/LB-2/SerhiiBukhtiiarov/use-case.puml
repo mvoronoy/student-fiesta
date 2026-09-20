@@ -1,0 +1,33 @@
+@startuml
+:Customer: as cust
+:Courier: as c
+:Chef: as ch
+:Admin: as a
+
+cust <|-- a
+
+rectangle "піцерія" {
+    usecase "Create an order" as cr
+    usecase "Customize a pizza" as cp
+    usecase "Replace ingredients" as rep
+    usecase "Cancel an order" as cancel
+    usecase "Track delivery" as delivery
+    usecase "Process payment" as pay
+    usecase "Manage menu" as menu
+    usecase "Update delivery status" as update_delivery
+}
+
+cust --> cr
+cust --> cp
+cust --> cancel
+cust --> delivery
+
+c --> update_delivery
+ch --> rep
+a --> menu
+
+cr ..> pay : include
+cp ..> cr : extends
+rep ..> cr : depends
+
+@enduml

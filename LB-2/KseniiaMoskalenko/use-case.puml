@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+:Customer:
+:Admin:
+:Sitter:
+:Vet:
+
+usecase "create a booking" as createBooking
+usecase "register a cat" as registerCat
+usecase "make a payment" as makePayment
+usecase "check-in pet" as checkIn
+usecase "veterinary check-up" as vetCheck
+usecase "send daily report" as sendReport
+usecase "view daily reports" as viewReports
+usecase "track pet via camera" as trackCam
+
+' Зв'язки Клієнта
+Customer --> createBooking
+Customer --> makePayment
+Customer --> trackCam
+Customer --> viewReports
+
+' Зв'язки Адміністратора
+Admin --> createBooking
+Admin --> registerCat
+Admin --> makePayment
+Admin --> checkIn
+
+' Зв'язки Сіттера
+Sitter --> checkIn
+Sitter --> sendReport
+
+' Зв'язки Ветеринара (внизу)
+Vet --> vetCheck
+
+' Залежності (include / extend)
+createBooking ..> registerCat : <<include>>
+createBooking ..> vetCheck : <<include>>
+
+checkIn <.. makePayment : <<extend>>
+sendReport ..> viewReports : <<include>>
+
+@enduml
