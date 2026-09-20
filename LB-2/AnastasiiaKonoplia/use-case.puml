@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+left to right direction
+
+actor Customer
+actor "Cat-sitter" as Sitter
+actor Veterinarian
+actor Admin
+
+rectangle "Cat Hotel Service" {
+
+    usecase "Create cat profile" as UC1
+    usecase "Book a stay" as UC2
+    usecase "Cancel booking" as UC3
+    usecase "Pay for stay" as UC4
+    usecase "View booking status" as UC5
+
+    usecase "Feed cat" as UC6
+    usecase "Take care of cat" as UC7
+    usecase "Update cat status" as UC8
+    usecase "Track cat status" as UC8a
+
+    usecase "Provide veterinary care" as UC9
+    usecase "Manage bookings" as UC10
+    usecase "Assign sitter to booking" as UC11
+}
+
+Customer --> UC1
+Customer --> UC2
+Customer --> UC3
+Customer --> UC4
+Customer --> UC5
+
+Sitter --> UC6
+Sitter --> UC7
+Sitter --> UC8
+
+Veterinarian --> UC9
+Admin --> UC10
+
+Admin --> UC11
+Sitter --> UC11
+
+UC2 ..> UC4 : <<include>>
+UC7 ..> UC6 : <<include>>
+UC5 ..> UC8a : <<include>>
+
+UC3 ..> UC2 : <<extend>>
+
+@enduml
