@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Customer" as customer
+actor "Chef" as chef
+actor "Courier" as courier
+actor "Admin" as admin
+
+customer <|-- admin
+
+rectangle "Pizza Ordering System" {
+    usecase "Browse Menu" as UC_browse
+    usecase "Create Order" as UC_order
+    usecase "Customize Pizza" as UC_customize
+    usecase "Cancel Order" as UC_cancel
+    usecase "Pay for Order" as UC_pay
+    usecase "Track Delivery" as UC_track
+
+    usecase "Cook Order" as UC_cook
+    usecase "Replace Unavailable Ingredients" as UC_replace
+    usecase "Deliver Order" as UC_deliver
+    usecase "Update Delivery Status" as UC_status
+    usecase "Manage Menu & Prices" as UC_manage
+}
+
+customer --> UC_browse
+customer --> UC_order
+customer --> UC_cancel
+customer --> UC_track
+
+UC_order ..> UC_pay : <<include>>
+UC_customize ..> UC_order : <<extend>>
+UC_replace ..> UC_cook : <<extend>>
+UC_status ..> UC_deliver : <<include>>
+
+chef --> UC_cook
+courier --> UC_deliver
+courier --> UC_status
+admin --> UC_manage
+
+@enduml
+@enduml
