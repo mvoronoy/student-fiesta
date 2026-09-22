@@ -1,0 +1,57 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+:Administrator: as a
+:VetDoctor: as vd
+:CatSitter: as c
+
+rectangle CatHotel {
+usecase "manage rooms" as rooms
+usecase "manage cats" as cats
+usecase "check room availability" as check
+usecase "create booking" as create
+usecase "cancel booking" as cancel
+usecase "view medical issues" as view_med
+a --> rooms
+a --> cats
+a --> check
+a --> create
+a --> cancel
+a --> view_med
+
+create .> check : <<include>>
+
+usecase "feed a cat" as feed
+usecase "clean a cat" as clean
+usecase "play with cat" as play
+usecase "monitor cat's condition" as monitor
+usecase "check cat's behavior" as behavior
+usecase "check veterinarian notes" as notes
+c --> feed
+c --> clean
+c --> play
+c --> monitor
+c --> behavior
+c --> notes
+
+usecase "examine a cat" as examine
+usecase "record health condition" as record
+usecase "diagnose health problems" as diagnose
+usecase "add medical notes" as medical
+usecase "prescribe treatment" as treatment
+usecase "prescribe medication" as medication
+usecase "record allergies" as allergies
+usecase "report health issues to the administrator" as issues
+vd --> examine
+vd --> record
+vd --> diagnose
+vd --> medical
+vd --> treatment
+vd --> medication
+vd --> allergies
+vd --> issues
+
+ examine .> record : <<include>>
+ diagnose .> medical : <<include>>
+ treatment .> medication : <<include>>
+@enduml
