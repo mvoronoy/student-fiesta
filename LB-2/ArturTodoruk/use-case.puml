@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+:User:
+:Customer: as c
+:Cook: as ck
+:Courier: as d
+
+:User: <|-- c
+
+usecase "Create an order" as cr
+usecase "Customize a pizza" as cmz
+usecase "Replace unavailable ingredients" as rpl
+usecase "Cancel an order" as cnl
+usecase "Track delivery" as trk
+usecase "Prepare pizza" as ppr
+usecase "Deliver pizza" as dlv
+
+cr <-- c
+cmz <-- c
+cnl <-- c
+trk <-- c
+
+ppr <-- ck
+dlv <-- d
+
+cr <.. cmz
+cmz <.. rpl
+
+@enduml
