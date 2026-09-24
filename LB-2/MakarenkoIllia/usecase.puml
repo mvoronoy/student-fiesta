@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+actor "Customer" as customer
+actor "Courier" as courier
+actor "Chef" as chef
+actor "Admin" as admin
+
+customer <|-- admin
+
+rectangle "Pizzeria" {
+  usecase "Customize a pizza" as customize
+  usecase "Cancel an order" as cancel
+  usecase "Track delivery" as track
+  usecase "Update delivery status" as update_status
+  usecase "Replace ingredients" as replace
+  usecase "Manage menu and stuff" as manage
+
+  usecase "Create an order" as create
+  usecase "Process payment" as payment
+}
+
+customer --> customize
+customer --> cancel
+customer --> track
+customer --> create
+
+courier --> update_status
+chef --> replace
+admin --> manage
+
+customize ..> create : <<extends>>
+create ..> payment : <<include>>
+replace ..> create : <<depends>>
+
+@enduml
