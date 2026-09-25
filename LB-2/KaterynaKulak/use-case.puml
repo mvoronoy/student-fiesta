@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+' Актори та їхнє успадкування
+:User: as u
+:Customer: as c
+u <|-- c
+
+:Employee: as emp
+:Chef: as chef
+:Courier: as courier
+emp <|-- chef
+emp <|-- courier
+
+:Payment Gateway: as payment_system
+
+rectangle "Сервіс замовлення піци" {
+  ' Дії користувача / клієнта
+  usecase "View Menu" as UC_view
+  usecase "Create an Order" as UC_order
+  usecase "Customize a Pizza" as UC_customize
+  usecase "Replace Unavailable Ingredients" as UC_replace
+  usecase "Pay for Order" as UC_pay
+  usecase "Cancel Order" as UC_cancel
+  usecase "Track Delivery" as UC_track
+
+  ' Дії співробітників
+  usecase "Log In to Work Shift" as UC_login
+  usecase "Get Order Details" as UC_receive_order
+  usecase "Update Cooking Status" as UC_status_cook
+  usecase "Update Delivery Status" as UC_status_delivery
+  usecase "Confirm Delivery" as UC_complete
+}
+
+' Зв'язки користувачів з прецедентами
+u --> UC_view
+c --> UC_order
+c --> UC_cancel
+c --> UC_track
+
+' Залежності між прецедентами клієнта
+UC_order ..> UC_customize : <<extend>>
+UC_customize ..> UC_replace : <<extend>>
+UC_order ..> UC_pay : <<include>>
+
+' Зв'язок із зовнішньою системою
+UC_pay --> payment_system
+
+' Зв'язки співробітників
+emp --> UC_login
+chef --> UC_receive_order
+chef --> UC_status_cook
+
+courier --> UC_status_delivery
+courier --> UC_complete
+
+' Логічний зв'язок трекінгу зі зміною статусу
+UC_track ..> UC_status_delivery : <<include>>
+@enduml
