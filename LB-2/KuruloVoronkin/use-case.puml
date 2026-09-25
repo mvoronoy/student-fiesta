@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Клієнт" as Customer
+actor "Кур'єр" as Courier
+actor "Піцайоло" as Cook
+actor "Адміністратор" as Admin
+
+rectangle "Сервіс замовлення піци" {
+  usecase "Створити замовлення" as UC_CreateOrder
+  usecase "Кастомізувати піцу" as UC_Customize
+  usecase "Оплатити замовлення" as UC_Pay
+  usecase "Замінити відсутні інгредієнти" as UC_ReplaceIngr
+  usecase "Скасувати замовлення" as UC_CancelOrder
+  usecase "Відстежувати доставку" as UC_Track
+  usecase "Прийняти замовлення до роботи" as UC_AcceptOrder
+  usecase "Оновити статус доставки" as UC_UpdateDelivery
+  usecase "Управляти меню" as UC_ManageMenu
+}
+
+' Зв'язки для Клієнта
+Customer --> UC_CreateOrder
+Customer --> UC_CancelOrder
+Customer --> UC_Track
+
+' Відносини між Use Cases (include / extend)
+UC_CreateOrder ..> UC_Customize : <<include>>
+UC_CreateOrder ..> UC_Pay : <<include>>
+UC_CreateOrder <.. UC_ReplaceIngr : <<extend>>
+
+' Зв'язки для Піцайоло
+Cook --> UC_AcceptOrder
+Cook --> UC_ReplaceIngr
+
+' Зв'язки для Кур'єра
+Courier --> UC_UpdateDelivery
+
+' Успадкування акторів (Адміністратор має всі права Клієнта + свої)
+Customer <|-- Admin
+Admin --> UC_ManageMenu
+
+@enduml
