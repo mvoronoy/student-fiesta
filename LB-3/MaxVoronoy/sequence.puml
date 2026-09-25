@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Accountant as u1
+boundary "Login" as login
+control LoginController as lc
+entity LoginEntity as entity
+database Users
+collections Logger as logs
+
+u1 -> login: Authentication Request
+login -> lc: doLogin
+activate lc
+
+lc-\logs: login start
+lc-->entity: <<create>>
+lc->Users: checkExists
+
+activate Users
+Users->Users: Lock
+Users->Users: SELECT
+destroy entity
+
+deactivate Users
+
+lc-\logs: login complete
+
+deactivate lc
+lc-->login: Ok
+@enduml

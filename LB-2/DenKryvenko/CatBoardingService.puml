@@ -1,0 +1,251 @@
+@startuml
+
+left to right direction
+
+package "User" {
+    actor Owner as owner
+}
+
+package "Personal" {
+    actor CatSitter as sitter
+    actor Admin as admin
+}
+
+rectangle "Cat Boarding Service" {
+' -------------------------------------------
+
+' ---- OWNER ----
+    package "Owner" {
+
+        ' 1. Authentication
+        usecase "Register / Log In" as ownerAuth
+
+        ' 2. Owner Profile
+        usecase "Manage Owner Profile" as ownerProfile
+
+        ' 3. Pet Profile
+        usecase "Manage Pet Profile" as petProfile
+
+        package "Pet Information" {
+            usecase "Basic Information" as petBasic
+            usecase "Health Information" as petHealth
+            usecase "Care Preferences" as petCare
+            usecase "Behavior & Requirements" as petBehavior
+        }
+
+        ' 4. Hotel Search
+        usecase "Search Cat Hotels" as searchHotel
+
+        package "Hotel Search" {
+            usecase "Location" as location
+            usecase "Price Range" as priceRange
+            usecase "Available Dates" as dates
+        }
+
+        ' 5. Hotel Details
+        usecase "View Hotel Details" as hotelDetails
+
+        package "Hotel Details" {
+            usecase "Description & Photos" as description
+            usecase "Services & Conditions" as services
+            usecase "Price & Availability" as hotelPrice
+        }
+
+        ' 6. Booking
+        usecase "Create Booking" as booking
+
+        package "Booking" {
+            usecase "Select Dates" as bookingDates
+            usecase "Select Pet" as bookingPet
+            usecase "Confirm Booking" as confirmBooking
+        }
+
+        ' 7. Payment
+        usecase "Make Payment" as payment
+
+        ' 8. Booking Management
+        usecase "Manage Booking" as manageBooking
+
+        package "Booking Management" {
+            usecase "View Booking Status" as bookingStatus
+            usecase "Cancel Booking" as cancelBooking
+        }
+
+        ' 9. Communication
+        usecase "Communicate with CatSitter" as chat
+
+        ' 10. Review
+        usecase "Leave Review" as review
+
+        package "Review" {
+            usecase "Rating" as rating
+            usecase "Comment" as comment
+        }
+    }
+' -------------------------------------------
+
+' ---- CATSITTER ----
+    package "CatSitter" {
+
+        ' 1. Authentication
+        usecase "Register / Log In" as sitterAuth
+
+        ' 2. Sitter Profile
+        usecase "Manage Sitter Profile" as sitterProfile
+
+        package "Sitter Information" {
+            usecase "Personal Information" as sitterInfo
+            usecase "Experience" as experience
+            usecase "Description" as sitterDescription
+        }
+
+        ' 3. Own Hotel
+        usecase "Manage Own Hotel" as ownHotel
+
+        package "Own Hotel Management" {
+            usecase "Hotel Information" as hotelInfo
+            usecase "Services & Conditions" as hotelServices
+            usecase "Price & Capacity" as hotelPricing
+            usecase "Availability" as availability
+        }
+
+        ' 4. Booking Requests
+        usecase "Manage Booking Requests" as requests
+
+        package "Booking Requests" {
+            usecase "Accept Booking" as acceptBooking
+            usecase "Reject Booking" as rejectBooking
+        }
+
+        ' 5. Cat Stay
+        usecase "Manage Cat Stay" as catStay
+
+        package "Cat Stay" {
+            usecase "Check-in" as checkin
+            usecase "Care & Feeding" as feeding
+            usecase "Stay Updates" as stayUpdates
+            usecase "Check-out" as checkout
+        }
+
+        ' 6. Communication
+        usecase "Communicate with Owner" as sitterChat
+    }
+' -------------------------------------------
+
+' ---- ADMIN ----
+    package "Admin" {
+
+        ' 1. Authentication
+        usecase "Log In" as adminAuth
+
+        ' 2. Users
+        usecase "Manage Users" as users
+
+        package "User Management" {
+            usecase "View Users" as viewUsers
+            usecase "Block / Unblock User" as blockUser
+        }
+
+        ' 3. Hotels
+        usecase "Moderate Hotels" as hotels
+
+        package "Hotel Moderation" {
+            usecase "Review Hotel Listing" as reviewListing
+            usecase "Approve / Reject Listing" as approveListing
+            usecase "Remove Hotel Listing" as removeListing
+        }
+
+        ' 4. Bookings
+        usecase "Manage Bookings" as adminBookings
+
+        ' 5. Reviews
+        usecase "Manage Reviews" as reviews
+
+        ' 6. Complaints
+        usecase "Handle Complaints" as complaints
+    }
+' -------------------------------------------
+
+' ---- OWNER RELATIONSHIPS ----
+    owner --> ownerAuth
+    owner --> ownerProfile
+    owner --> petProfile
+    owner --> searchHotel
+    owner --> hotelDetails
+    owner --> booking
+    owner --> payment
+    owner --> manageBooking
+    owner --> chat
+    owner --> review
+
+    petProfile ..> petBasic : <<include>>
+    petProfile ..> petHealth : <<include>>
+    petProfile ..> petCare : <<include>>
+    petProfile ..> petBehavior : <<include>>
+
+    searchHotel ..> location : <<include>>
+    searchHotel ..> priceRange : <<include>>
+    searchHotel ..> dates : <<include>>
+
+    hotelDetails ..> description : <<include>>
+    hotelDetails ..> services : <<include>>
+    hotelDetails ..> hotelPrice : <<include>>
+
+    booking ..> bookingDates : <<include>>
+    booking ..> bookingPet : <<include>>
+    booking ..> confirmBooking : <<include>>
+
+    manageBooking ..> bookingStatus : <<include>>
+    manageBooking ..> cancelBooking : <<include>>
+
+    review ..> rating : <<include>>
+    review ..> comment : <<include>>
+' -------------------------------------------
+
+' ---- CATSITTER RELATIONSHIPS ----
+    sitter --> sitterAuth
+    sitter --> sitterProfile
+    sitter --> ownHotel
+    sitter --> requests
+    sitter --> catStay
+    sitter --> sitterChat
+
+    sitterProfile ..> sitterInfo : <<include>>
+    sitterProfile ..> experience : <<include>>
+    sitterProfile ..> sitterDescription : <<include>>
+
+    ownHotel ..> hotelInfo : <<include>>
+    ownHotel ..> hotelServices : <<include>>
+    ownHotel ..> hotelPricing : <<include>>
+    ownHotel ..> availability : <<include>>
+
+    requests ..> acceptBooking : <<include>>
+    requests ..> rejectBooking : <<include>>
+
+    catStay ..> checkin : <<include>>
+    catStay ..> feeding : <<include>>
+    catStay ..> stayUpdates : <<include>>
+    catStay ..> checkout : <<include>>
+' -------------------------------------------
+
+
+' ---- ADMIN RELATIONSHIPS ----
+    admin --> adminAuth
+    admin --> users
+    admin --> hotels
+    admin --> adminBookings
+    admin --> reviews
+    admin --> complaints
+
+    users ..> viewUsers : <<include>>
+    users ..> blockUser : <<include>>
+
+    hotels ..> reviewListing : <<include>>
+    hotels ..> approveListing : <<include>>
+    hotels ..> removeListing : <<include>>
+' -------------------------------------------
+
+'---- COMMUNICATION ----
+    chat -- sitterChat
+
+@enduml
