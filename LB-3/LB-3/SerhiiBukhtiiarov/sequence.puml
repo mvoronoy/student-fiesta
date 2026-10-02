@@ -1,0 +1,37 @@
+@startuml
+actor "Кухар" as cook
+boundary "Робоча поверхня" as Board
+control "Гриль" as Grill
+database "Холодильник" as Fridge
+
+cook -> Fridge : 1. getMeat() \n[Замаринована телятина]
+activate Fridge
+Fridge --> cook : Телятина
+deactivate Fridge
+
+cook -> Grill : 2. cookMeat()
+activate Grill
+Grill --> cook : 3. Готове м'ясо
+deactivate Grill
+
+cook -> Fridge : 4. getSauceIngredients() \n[сметана, майонез, часник, кріп]
+cook -> Board : 5. mixSauce()
+activate Board
+
+cook -> Fridge : 6. getVegetables() \n[цибуля, фіолетова капуста, солоні огірки]
+cook -> Board : 7. chopVegetables()
+
+cook -> Fridge : 8. getLavash() & getHotSauce()
+cook -> Board : 9. layLavash()
+
+cook -> Board : 10. applySauces(Білий, Гострий)
+cook -> Board : 11. addIngredients(М'ясо)
+cook -> Board : 12. addIngredients(Капуста, Цибуля, Огірки)
+cook -> Board : 13. wrap()
+deactivate Board
+
+cook -> Grill : 14. grill() \n[Підсмажити шаурму]
+activate Grill
+Grill --> cook : 15. Готова шаурма
+deactivate Grill
+@enduml
