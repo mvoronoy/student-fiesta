@@ -1,0 +1,65 @@
+@startuml
+autonumber
+
+actor Chef as u1
+boundary "KitchenTable" as table
+control ShawarmaController as sc
+entity MeatEntity as meat
+entity SauceEntity as sauce
+entity ShawarmaEntity as roll
+database Pantry as storage
+collections KitchenTimer as timer
+
+u1 -> table: StartPreparationRequest
+table -> sc: prepareShawarma
+activate sc
+
+sc-\timer: startTimer(prep)
+
+sc -> storage: getChickenAndSpices
+storage --> sc: rawChicken, spices
+sc-->meat: <<create>>
+activate meat
+sc -> meat: marinate(salt, pepper, herbs)
+sc -> meat: fry()
+meat -> meat: checkTemperature
+sc -> meat: chopToPieces
+deactivate meat
+
+sc -> storage: getSauceIngredients
+storage --> sc: mayo, sourCream, garlic, lemonJuice, spices
+sc-->sauce: <<create>>
+activate sauce
+sc -> sauce: blend()
+deactivate sauce
+
+sc -> storage: getVeggies
+storage --> sc: tomato, cucumber, cabbage
+sc -> sc: chopVegetables()
+
+sc -> storage: getLavash
+storage --> sc: flatbread
+sc-->roll: <<create>>
+activate roll
+
+sc -> roll: spread(sauce)
+destroy sauce
+
+sc -> roll: addLayer(cabbage)
+sc -> roll: addLayer(tomato, cucumber)
+sc -> roll: addLayer(meat)
+destroy meat
+
+sc -> roll: wrapRoll()
+
+sc -> roll: toastOnGrill()
+roll -> roll: crispSkin
+deactivate roll
+
+sc-\timer: timer complete
+
+sc --> table: ReadyShawarma
+deactivate sc
+
+table --> u1: Shawarma is Served
+@enduml
