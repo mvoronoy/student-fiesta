@@ -1,0 +1,55 @@
+@startuml
+title Приготування шаурми
+autonumber
+
+actor "Кухар" as cook
+
+database "Холодильник" as fridge
+
+box "Кухонна зона" #LightYellow
+boundary "Обробна дошка" as board
+control "Сковорода" as pan
+control "Фритюрниця" as fryer
+control "Електрогриль" as grill
+end box
+
+cook -> fridge : Дістати куряче філе, лаваш, овочі, соус та картоплю фрі
+activate fridge
+fridge --> cook : Інгредієнти отримано
+deactivate fridge
+
+cook -> pan : Покласти філе смажитися
+activate pan
+
+cook ->> fryer : Занурити картоплю фрі в олію (асинхронно, поки смажиться м'ясо)
+activate fryer
+
+cook ->> board : Нарізати капусту, томати та огірки (асинхронно, поки смажиться м'ясо)
+activate board
+board --> cook : Овочі нарізані
+deactivate board
+
+pan --> cook : Філе готове
+deactivate pan
+
+fryer --> cook : Картопля фрі готова
+deactivate fryer
+
+cook -> board : Нарізати готове філе шматочками
+activate board
+cook -> board : Розгорнути лаваш
+cook -> board : Змастити лаваш фірмовим соусом
+cook -> board : Викласти м'ясо, овочі та картоплю фрі
+cook -> board : Щільно загорнути шаурму в рол
+board --> cook : Шаурма сформована
+deactivate board
+
+cook -> grill : Покласти шаурму для підсмажування
+activate grill
+cook -> grill : Перевернути шаурму на другий бік
+grill --> cook : Шаурма з хрусткою скоринкою готова!
+deactivate grill
+
+cook -> cook : Загорнути шаурму в папір для подачі
+
+@enduml
