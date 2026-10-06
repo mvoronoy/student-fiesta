@@ -1,0 +1,40 @@
+@startuml
+actor "Кухар" as cook
+participant "Холодильник" as fridge
+participant "Мясо" as meat
+participant "Сковорідка" as pan
+participant "Овочі" as veggie
+participant "Соус" as sauce
+participant "Лаваш" as lavash
+participant "Шаурма" as shawarma
+cook -> fridge : дістати інградієнти
+fridge --> cook : отримано інградієнти
+cook -> meat : замаринувати мясо
+meat --> cook : замариноване мясо
+
+   par Смаження м'яса
+     loop 7 хвилин
+       cook -> pan : смажити м'ясо
+     end
+     pan --> cook : м'ясо готове
+   else Підготовка овочів
+     cook -> veggie : помити овочі
+     cook -> veggie : порізати овочі
+     veggie --> cook : готові овочі
+   else Підготовка соусу
+     cook -> sauce : додати грецький йогурт
+     cook -> sauce : додати гострий соус
+     sauce --> cook : готовий соус
+   end
+cook -> lavash : розкласти лаваш
+cook -> lavash : додати мясо, овочі, соус
+  opt
+  cook -> lavash : додати сир
+  end
+cook -> shawarma : завернути шаурму
+loop 3 хвилини
+cook -> pan : обсмажити шаурму з обох боків
+end
+pan -> shawarma : шаурма обсмажена
+shawarma --> cook : готова шаурма
+@enduml
