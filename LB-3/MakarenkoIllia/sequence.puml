@@ -1,0 +1,71 @@
+@startuml
+autonumber
+
+actor "Кухар" as cook
+boundary "Обробна дошка" as board
+control "Гриль" as grill
+database "Холодильник" as fridge
+collections "Миска для соусу" as bowl
+entity "Лаваш" as lavash
+
+cook -> fridge : getChicken()
+activate fridge
+fridge --> cook : Куряче філе
+deactivate fridge
+
+cook -> board : cutChicken()
+activate board
+board --> cook : Нарізана курка
+deactivate board
+
+cook -> grill : grillChicken()
+activate grill
+grill -> grill : checkTemperature()
+grill --> cook : Готова курка
+deactivate grill
+
+cook -> fridge : getVegetables()
+activate fridge
+fridge --> cook : Капуста, огірок
+deactivate fridge
+
+cook -> board : cutVegetables()
+activate board
+board --> cook : Нарізані овочі
+deactivate board
+
+cook -> fridge : getSauceIngredients()
+activate fridge
+fridge --> cook : Філадельфія, томатна паста
+deactivate fridge
+
+cook -> bowl : prepareSauce()
+activate bowl
+bowl -> bowl : mixIngredients()
+bowl --> cook : Готовий соус
+deactivate bowl
+
+cook -> fridge : getLavash()
+activate fridge
+fridge --> cook : Лаваш
+deactivate fridge
+
+cook -> board : placeLavash()
+activate board
+
+cook -> board : addSauce()
+cook -> board : addChicken()
+cook -> board : addVegetables()
+
+cook -> board : foldLavash()
+board --> cook : Загорнута шаурма
+deactivate board
+
+cook -> grill : toastShawarma()
+activate grill
+grill --> cook : Підсмажена шаурма
+deactivate grill
+
+cook -> cook : serveShawarma()
+
+@enduml
