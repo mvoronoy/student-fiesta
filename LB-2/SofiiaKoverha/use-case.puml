@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+
+' Актори
+:User:
+User <|-- :Customer:
+:Chef:
+:Delivery:
+
+' Варіанти використання
+usecase "create an order" as cr
+usecase "customize a pizza" as cu
+usecase "cancel an order" as ca
+usecase "track delivery" as tr
+usecase "process payment" as pay
+
+' Зв'язки використання
+cr <-- Customer
+cu <-- Customer
+ca <-- Customer
+tr <-- Customer
+
+' Залежність
+cr <.. pay
+@enduml
