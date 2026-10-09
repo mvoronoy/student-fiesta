@@ -1,0 +1,32 @@
+@startuml
+skinparam componentStyle uml2
+
+package "Клієнтська частина" {
+  [Додаток Користувача] as ClientApp
+}
+
+package "Сервер Піцерії" {
+  [Модуль Замовлень\n(Вибір піци та інгредієнтів)] as OrderMod
+  [Модуль Ціноутворення] as PriceMod
+  [Модуль Відстеження] as TrackMod
+}
+
+database "Зовнішні сервіси" {
+  [Платіжна система] as PaySys
+  [Служба Доставки] as Delivery
+}
+
+' Як користувач робить замовлення
+ClientApp --> OrderMod : Формує замовлення
+' Як користувач розуміє ціну
+OrderMod --> PriceMod : Запит вартості
+PriceMod --> ClientApp : Відображає ціну
+' Як користувач оплачує
+ClientApp --> PaySys : Проводить оплату
+PaySys --> OrderMod : Підтвердження оплати
+' Як користувач розуміє стан замовлення
+OrderMod --> Delivery : Передача в доставку
+Delivery --> TrackMod : Оновлення статусу
+TrackMod --> ClientApp : Показує статус замовлення
+
+@enduml
