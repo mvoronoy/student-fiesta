@@ -1,0 +1,14 @@
+@startuml
+actor "Кухар" as cook
+participant "Лаваш" as lavash
+participant "Начинка" as filling
+participant "Гриль" as grill
+
+cook -> filling : Нарізати м'ясо та овочі
+cook -> lavash : Розгорнути лаваш на столі
+cook -> lavash : Змастити соусом
+cook -> lavash : Викласти підготовлену начинку
+cook -> lavash : Щільно загорнути шаурму
+cook -> grill : Покласти на розігрітий гриль
+grill --> cook : Готова хрустка шаурма!
+@enduml
