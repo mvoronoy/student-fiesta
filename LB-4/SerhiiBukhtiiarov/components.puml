@@ -1,0 +1,37 @@
+@startuml
+
+actor "Customer" as cust
+actor "Courier" as c
+
+component "Customer App\n(Web/Mobile)" as ClientApp
+component "Courier App" as CourierApp
+
+component "Menu & Customization\n(Ingredients)" as MenuComp
+component "Order Management" as OrderComp
+component "Pricing & Checkout" as PriceComp
+component "Payment Gateway" as PaymentComp
+component "Delivery & Tracking" as DeliveryComp
+
+' Взаємодія користувачів із застосунками
+cust --> ClientApp
+c --> CourierApp
+' Вибір інгредієнтів
+ClientApp ..> MenuComp : 1. Customize pizza\n(вибір інгредієнтів)
+' Оформлення замовлення
+ClientApp ..> OrderComp : 2. Create order\n(дані доставки)
+' Перегляд вартості
+ClientApp ..> PriceComp : 3. Get total price\n(розрахунок вартості)
+' Оплата
+ClientApp ..> PaymentComp : 4. Process payment\n(оплата замовлення)
+' Перевірка статусу
+ClientApp ..> DeliveryComp : 5. Track delivery\n(перевірка статусу)
+' Оновлення статусу кур'єром
+CourierApp ..> DeliveryComp : Update delivery status
+OrderComp ..> MenuComp : Перевірка інгредієнтів
+OrderComp ..> PriceComp : Запит фінальної суми
+OrderComp ..> DeliveryComp : Передача замовлення кур'єру
+PaymentComp ..> OrderComp : Запит на оплату
+@enduml
+
+
+
