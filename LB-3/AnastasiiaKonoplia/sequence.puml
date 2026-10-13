@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Клієнт" as Customer
+actor "Кухар" as Cook
+
+participant "Лаваш" as Lavash
+participant "Сирний соус" as CheeseSauce
+participant "Майонез" as Mayo
+participant "Часниковий соус" as GarlicSauce
+participant "Морква по-корейськи" as Carrot
+participant "М'ясо" as Meat
+participant "Овочі" as Vegetables
+participant "Сир" as Cheese
+participant "Гриль" as Grill
+participant "Упаковка" as Package
+participant "Каса" as CashDesk
+
+Customer -> Cook: Зробити замовлення
+Cook -> Customer: Уточнити склад шаурми
+
+Cook -> Lavash: Взяти лаваш
+Cook -> Lavash: Покласти на робочу поверхню
+
+Cook -> CheeseSauce: Взяти сирний соус
+Cook -> Lavash: Додати сирний соус
+
+Cook -> Mayo: Взяти майонез
+Cook -> Lavash: Додати майонез
+
+Cook -> GarlicSauce: Взяти часниковий соус
+Cook -> Lavash: Додати часниковий соус
+
+Cook -> Carrot: Взяти моркву по-корейськи
+Cook -> Lavash: Додати моркву
+
+Cook -> Meat: Взяти порцію м'яса
+Cook -> Lavash: Додати м'ясо
+
+Cook -> Vegetables: Взяти капусту та овочі
+Cook -> Lavash: Додати капусту та овочі
+
+Cook -> Cheese: Взяти сир
+Cook -> Lavash: Додати сир
+
+Cook -> Lavash: Загорнути шаурму
+
+Cook -> Grill: Покласти шаурму на гриль
+Grill -> Grill: Підсмажити шаурму
+Grill --> Cook: Готова шаурма
+
+Cook -> Grill: Забрати шаурму
+
+Cook -> Package: Взяти упаковку
+Cook -> Package: Запакувати шаурму
+
+Cook -> Customer: Назвати суму замовлення
+Customer -> CashDesk: Оплатити замовлення
+CashDesk --> Customer: Підтвердити оплату
+CashDesk --> Cook: Оплату отримано
+
+Cook -> Customer: Передати готову шаурму
+
+@enduml
