@@ -1,0 +1,101 @@
+@startuml
+
+autonumber
+
+actor "Cook" as cook
+boundary "KitchenCounter" as counter
+control "ShawarmaController" as controller
+entity "Chicken" as chicken
+entity "Vegetables" as vegetables
+entity "Sauce" as sauce
+entity "Shawarma" as shawarma
+database "IngredientStorage" as storage
+collections "KitchenTimer" as timer
+
+cook -> counter: StartPreparation
+counter -> controller: prepareShawarma()
+activate controller
+
+controller -> timer: startTimer()
+
+group Prepare chicken
+
+controller -> storage: getChickenAndSpices()
+storage --> controller: chicken, spices
+
+controller --> chicken: <<create>>
+activate chicken
+
+controller -> chicken: marinate()
+controller -> chicken: fry()
+
+
+controller -> chicken: cutIntoPieces()
+deactivate chicken
+
+end
+
+
+group Prepare vegetables
+
+controller -> storage: getVegetables()
+storage --> controller: tomato, cucumber, cabbage
+
+controller --> vegetables: <<create>>
+activate vegetables
+
+controller -> vegetables: wash()
+controller -> vegetables: chop()
+
+deactivate vegetables
+
+end
+
+
+group Prepare sauce
+
+controller -> storage: getSauceIngredients()
+storage --> controller: garlic, yogurt, mayo, spices
+
+controller --> sauce: <<create>>
+activate sauce
+
+controller -> sauce: mix()
+
+deactivate sauce
+
+end
+
+
+group Assemble shawarma
+
+controller -> storage: getLavash()
+storage --> controller: lavash
+
+controller --> shawarma: <<create>>
+activate shawarma
+
+controller -> shawarma: addSauce()
+controller -> shawarma: addVegetables()
+controller -> shawarma: addChicken()
+
+
+
+controller -> shawarma: wrap()
+controller -> shawarma: grill()
+
+shawarma -> shawarma: crispLavash()
+
+deactivate shawarma
+
+end
+
+
+timer --> controller: timeComplete
+
+controller --> counter: ShawarmaReady
+deactivate controller
+
+counter --> cook: ServeShawarma
+
+@enduml
