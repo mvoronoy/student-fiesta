@@ -2,100 +2,45 @@
 
 autonumber
 
-actor "Cook" as cook
-boundary "KitchenCounter" as counter
-control "ShawarmaController" as controller
-entity "Chicken" as chicken
-entity "Vegetables" as vegetables
-entity "Sauce" as sauce
-entity "Shawarma" as shawarma
-database "IngredientStorage" as storage
-collections "KitchenTimer" as timer
+actor "Кухар" as cook
+control "Контролер шаурми" as controller
+entity "Курка" as chicken
+entity "Соус" as sauce
+entity "Шаурма" as shawarma
+database "Інгредієнти" as storage
 
-cook -> counter: StartPreparation
-counter -> controller: prepareShawarma()
+cook -> controller: Почати приготування
 activate controller
 
-controller -> timer: startTimer()
-
-group Prepare chicken
-
-controller -> storage: getChickenAndSpices()
-storage --> controller: chicken, spices
+controller -> storage: Отримати курку та спеції
+storage --> controller: Курка, спеції
 
 controller --> chicken: <<create>>
 activate chicken
-
-controller -> chicken: marinate()
-controller -> chicken: fry()
-
-
-controller -> chicken: cutIntoPieces()
+controller -> chicken: Замаринувати
+controller -> chicken: Обсмажити
 deactivate chicken
 
-end
-
-
-group Prepare vegetables
-
-controller -> storage: getVegetables()
-storage --> controller: tomato, cucumber, cabbage
-
-controller --> vegetables: <<create>>
-activate vegetables
-
-controller -> vegetables: wash()
-controller -> vegetables: chop()
-
-deactivate vegetables
-
-end
-
-
-group Prepare sauce
-
-controller -> storage: getSauceIngredients()
-storage --> controller: garlic, yogurt, mayo, spices
+controller -> storage: Отримати інгредієнти для соусу
+storage --> controller: Інгредієнти
 
 controller --> sauce: <<create>>
 activate sauce
-
-controller -> sauce: mix()
-
+controller -> sauce: Змішати
 deactivate sauce
 
-end
-
-
-group Assemble shawarma
-
-controller -> storage: getLavash()
-storage --> controller: lavash
+controller -> storage: Отримати лаваш та овочі
+storage --> controller: Лаваш, овочі
 
 controller --> shawarma: <<create>>
 activate shawarma
-
-controller -> shawarma: addSauce()
-controller -> shawarma: addVegetables()
-controller -> shawarma: addChicken()
-
-
-
-controller -> shawarma: wrap()
-controller -> shawarma: grill()
-
-shawarma -> shawarma: crispLavash()
-
+controller -> shawarma: Додати курку
+controller -> shawarma: Додати соус та овочі
+controller -> shawarma: Загорнути
+controller -> shawarma: Обсмажити
 deactivate shawarma
 
-end
-
-
-timer --> controller: timeComplete
-
-controller --> counter: ShawarmaReady
+controller --> cook: Шаурма готова
 deactivate controller
-
-counter --> cook: ServeShawarma
 
 @enduml
