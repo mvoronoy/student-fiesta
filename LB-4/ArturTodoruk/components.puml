@@ -1,0 +1,54 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam nodesep 70
+skinparam ranksep 80
+
+actor "Клієнт" as customer
+actor "Піцайоло (Кухня)" as chef
+actor "Кур'єр" as courier
+actor "Адміністратор" as admin
+
+component "Клієнтський додаток" as App
+component "Конструктор піци" as PizzaComp
+component "Калькулятор вартості" as PricingComp
+component "Сервіс замовлень" as OrderComp
+component "Платіжний сервіс" as PayComp
+component "Сервіс трекінгу" as TrackComp
+
+database "База даних" as DB
+
+interface "IIngredients" as IIngredients
+interface "IPricing" as IPricing
+interface "IOrder" as IOrder
+interface "IPayment" as IPay
+interface "ITracking" as ITrack
+
+PizzaComp -up- IIngredients
+PricingComp -up- IPricing
+OrderComp -up- IOrder
+PayComp -up- IPay
+TrackComp -up- ITrack
+
+customer --> App
+
+App ..> IIngredients : Вибір основи\nй начинки
+App ..> IOrder : Оформлення замовлення\nй адреси доставки
+App ..> IPricing : Деталізація вартості\n(піца + начинка + доставка)
+App ..> IPay : Вибір методу\nй оплата
+App ..> ITrack : Моніторинг статусу\nв реальному часі
+
+
+OrderComp ..> IIngredients : Перевірка складу піци
+OrderComp ..> IPricing : Фіксація підсумкової суми
+OrderComp ..> IPay : Ініціалізація транзакції
+OrderComp ..> ITrack : Передача замовлення в роботу
+PricingComp ..> PizzaComp : Розрахунок суми начинки
+
+PizzaComp --> DB : Меню та наявність інгредієнтів
+OrderComp --> DB : Замовлення та чеки
+TrackComp --> DB : Історія змін статусів
+
+admin --> PizzaComp : Керування меню та цінами
+chef --> ITrack : Зміна статусу ("Готується", "У печі")
+courier --> ITrack : Зміна статусу ("В дорозі", "Доставлено")
+@enduml
