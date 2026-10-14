@@ -1,0 +1,60 @@
+@startuml
+top to bottom direction
+
+package "WebClient " {
+[Authentication] as Auth
+[Pet Registration] as PetReg
+[Booking Request] as BRequest
+[Pet Status] as Status
+
+Auth -[hidden]-> PetReg
+PetReg -[hidden]-> BRequest
+BRequest -[hidden]->Status
+}
+
+package "WebAdminPanel " {
+[Request Processing] as Request
+[Confirmation] as Confirm
+
+Request -[hidden]-> Confirm
+}
+
+package "WebVetProfile " {
+[Health State Reporting] as Report
+}
+
+database "PostgreSQL" as DB
+
+package "Payment Management System " {
+[Billing]
+[Initial Payment] as InitPay
+[Final Payment] as FinalPay
+[Receipt]
+
+[Billing] -[hidden]-> InitPay
+InitPay -[hidden]-> FinalPay
+FinalPay -[hidden]-> [Receipt]
+}
+
+[Payment Gateway] as Gateway
+
+"Authentication Interface                 " - Auth
+[Auth] --0)- [PetReg]: CollectUserData()
+[Request] --(0- [Confirm]: validateBookingData()
+
+BRequest ..> Request : SubmitBookingRequest()
+Confirm ..> Billing : ConfirmedRequestBooking()
+Billing ..> InitPay : CalculateDeposit()
+Billing ..> FinalPay : CalculateFinalPrice()
+InitPay ..> Receipt : generateReceipt()
+FinalPay ..> Receipt : generateReceipt()
+InitPay ..> Gateway : ProcessPayment()
+FinalPay ..> Gateway : ProcessPayment()
+
+Auth ..> DB : SaveUserData()
+PetReg ..> DB : SavePetData()
+Status ..> DB : SavePetStatus()
+Report ..> DB : SaveHealthReport()
+Request ..> DB : ReturnBookingRequest()
+Billing ..> DB : SavePaymentHistory()
+@enduml
