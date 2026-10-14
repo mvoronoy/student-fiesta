@@ -1,0 +1,51 @@
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+skinparam nodesep 80
+skinparam ranksep 90
+
+actor "Customer" as customer
+actor "Admin" as admin
+actor "Chef" as chef
+actor "Courier" as courier
+
+component "Customer App\n(Web/Mobile)" as App
+
+component "Menu & Customization" as MenuComp
+component "Order Management" as OrderComp
+component "Payment Gateway" as PayComp
+component "Delivery & Tracking" as TrackComp
+
+database "Database" as DB
+
+interface "IMenu" as IMenu
+interface "IOrder" as IOrder
+interface "IPayment" as IPay
+interface "ITracking" as ITrack
+
+MenuComp -up- IMenu
+OrderComp -up- IOrder
+PayComp -up- IPay
+TrackComp -up- ITrack
+
+customer --> App
+
+App ..> IMenu : choose ingredients,\nsee price
+App ..> IOrder : create order\n(ingredients, delivery)
+App ..> IPay : pay for order
+App ..> ITrack : check order status
+
+OrderComp ..> IMenu : validate ingredients,\ncalculate price
+OrderComp ..> IPay : request payment
+OrderComp ..> ITrack : hand over to courier
+
+MenuComp --> DB : menu, prices
+OrderComp --> DB : orders
+TrackComp --> DB : statuses
+
+admin --> IMenu : manage menu & prices
+chef --> IOrder : cook order
+courier --> ITrack : update delivery status
+
+@enduml
+```
