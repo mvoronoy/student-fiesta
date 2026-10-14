@@ -1,0 +1,23 @@
+@startuml
+autonumber
+actor "Кухар" as cook
+participant "Лаваш" as lavash
+participant "Інгредієнти\n(м'ясо, овочі, сир)" as ingredients
+participant "Гриль" as grill
+
+cook -> lavash: Розкласти лаваш на столі
+cook -> ingredients: Нарізати м'ясо та овочі,сир натерти
+cook -> lavash: Викласти начинку на лаваш по центру (3-см від початку лаваша)
+cook -> lavash: Загорнути шаурму щільним рулетом(один оберт,після нього загинаемо лаваш з обох боків
+cook -> grill: Покласти шаурму на розігрітий гриль
+activate grill
+
+note right of grill
+  Обсмажування до
+  хрусткої скоринки
+end note
+
+grill --> cook: Шаурма готова (з'явилась скоринка)
+deactivate grill
+cook -> cook: їсти)
+@enduml

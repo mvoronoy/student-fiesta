@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+actor "Customer" as cust
+actor "Pizza Chef" as chef
+actor "Delivery Person" as courier
+actor "Admin" as admin
+cust <|-- admin
+usecase "Login" as UC_Login
+usecase "Authentication" as UC_Auth
+usecase "Create an order" as UC_CreateOrder
+usecase "Customize a pizza" as UC_Customize
+usecase "Replace unavailable ingredients" as UC_Replace
+usecase "Cancel an order" as UC_Cancel
+usecase "Track delivery" as UC_Track
+cust --> UC_CreateOrder
+cust --> UC_Customize
+cust --> UC_Cancel
+cust --> UC_Track
+chef --> UC_Replace
+courier --> UC_Track
+admin --> UC_Login
+UC_Login ..> UC_Auth : <<include>>
+UC_CreateOrder ..> UC_Customize : <<extend>>
+UC_CreateOrder ..> UC_Replace : <<extend>>
+@enduml

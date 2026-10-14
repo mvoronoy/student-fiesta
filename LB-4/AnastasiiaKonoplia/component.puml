@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title Cat Hotel Service - Component Diagram
+
+left to right direction
+
+actor Customer
+actor "Cat-sitter" as Sitter
+actor Veterinarian
+actor Admin
+
+package "Cat Hotel Service" {
+
+    component "Customer App" as App
+
+    component "Cat Registration" as CatReg
+    component "Booking Service" as Booking
+    component "Price Calculator" as Price
+    component "Payment Service" as Payment
+    component "Booking Status" as BookingStatus
+    component "Cat Status Tracking" as CatStatus
+
+    component "Sitter Service" as SitterService
+    component "Veterinary Service" as VetService
+
+    database "Cat Hotel Database" as DB
+}
+
+Customer --> App : Use application
+
+App --> CatReg : Register cat
+App --> Booking : Create booking
+App --> Price : Calculate stay price
+App --> Payment : Make payment
+App --> BookingStatus : View booking status
+App --> CatStatus : View cat status
+
+Booking --> Price : Calculate final price
+Booking --> DB : Save booking
+
+CatReg --> DB : Save cat profile
+
+Payment --> DB : Save payment
+Payment --> Booking : Initial / final payment
+
+Sitter --> SitterService : Care for cat
+SitterService --> CatStatus : Update cat status
+SitterService --> DB : Save care information
+
+Veterinarian --> VetService : Provide veterinary care
+VetService --> CatStatus : Update health status
+
+CatStatus <--> DB : Save / read cat status
+
+BookingStatus --> DB : Read booking status
+
+Admin --> Booking : Manage bookings
+Admin --> SitterService : Assign sitter
+
+@enduml

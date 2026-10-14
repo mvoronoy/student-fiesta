@@ -1,0 +1,46 @@
+@startuml
+
+autonumber
+
+actor "Кухар" as cook
+control "Контролер шаурми" as controller
+entity "Курка" as chicken
+entity "Соус" as sauce
+entity "Шаурма" as shawarma
+database "Інгредієнти" as storage
+
+cook -> controller: Почати приготування
+activate controller
+
+controller -> storage: Отримати курку та спеції
+storage --> controller: Курка, спеції
+
+controller --> chicken: <<create>>
+activate chicken
+controller -> chicken: Замаринувати
+controller -> chicken: Обсмажити
+deactivate chicken
+
+controller -> storage: Отримати інгредієнти для соусу
+storage --> controller: Інгредієнти
+
+controller --> sauce: <<create>>
+activate sauce
+controller -> sauce: Змішати
+deactivate sauce
+
+controller -> storage: Отримати лаваш та овочі
+storage --> controller: Лаваш, овочі
+
+controller --> shawarma: <<create>>
+activate shawarma
+controller -> shawarma: Додати курку
+controller -> shawarma: Додати соус та овочі
+controller -> shawarma: Загорнути
+controller -> shawarma: Обсмажити
+deactivate shawarma
+
+controller --> cook: Шаурма готова
+deactivate controller
+
+@enduml
