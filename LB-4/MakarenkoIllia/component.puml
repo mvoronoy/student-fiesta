@@ -1,0 +1,43 @@
+
+@startuml
+top to bottom direction
+
+skinparam componentStyle uml2
+skinparam linetype spline
+skinparam nodesep 75
+skinparam ranksep 90
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam componentPadding 15
+
+actor "Customer" as customer
+actor "Courier" as courier
+
+component "Customer App" as app
+component "Menu and Customization" as menu
+component "Pricing and Checkout" as pricing
+component "Order Management" as orders
+component "Payment Gateway" as payment
+component "Tracking Delivery" as delivery
+component "Courier App" as courierApp
+
+customer -down-> app
+
+app ..> menu : 1. Customize pizza
+app ..> orders : 2. Create order
+
+menu ..> orders : Перевірка інгредієнтів
+
+app ..> pricing : 3. Get total price
+orders ..> pricing : Запит фінальної суми
+
+app ..> payment : 4. Process payment
+payment ..> orders : Підтвердження оплати
+
+app ..> delivery : 5. Track delivery
+orders ..> delivery : Передача замовлення кур'єру
+
+courier -down-> courierApp
+courierApp ..> delivery : Update delivery status
+
+@enduml
