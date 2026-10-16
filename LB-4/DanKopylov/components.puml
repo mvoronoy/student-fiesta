@@ -1,0 +1,39 @@
+@startuml
+
+actor "Клієнт" as customer
+actor "Кур'єр" as courier
+
+component "Клієнтський застосунок" as ClientApp
+component "Застосунок кур'єра" as CourierApp
+
+component "Меню та інгредієнти" as MenuComp
+component "Керування замовленням" as OrderComp
+component "Сервіс розрахунку вартості" as PriceComp
+component "Платіжний сервіс" as PaymentComp
+component "Доставка та відстеження" as DeliveryComp
+
+customer --> ClientApp
+courier --> CourierApp
+
+ClientApp ..> MenuComp : 1. Вибір страви\nта інгредієнтів
+ClientApp ..> OrderComp : 2. Створення замовлення\nта адреси доставки
+ClientApp ..> PriceComp : 3. Перегляд вартості
+ClientApp ..> PaymentComp : 4. Оплата замовлення
+ClientApp ..> DeliveryComp : 5. Перегляд статусу
+
+CourierApp ..> DeliveryComp : Оновлення статусу доставки
+
+OrderComp ..> MenuComp : Перевірка інгредієнтів
+OrderComp ..> PriceComp : Розрахунок фінальної суми
+OrderComp ..> DeliveryComp : Передача замовлення в доставку
+
+PaymentComp ..> OrderComp : Підтвердження оплати
+
+database "База даних" as DB
+
+MenuComp --> DB : Дані про страви\nта інгредієнти
+OrderComp --> DB : Дані замовлення
+DeliveryComp --> DB : Статуси доставки
+PaymentComp --> DB : Дані про оплату
+
+@enduml
