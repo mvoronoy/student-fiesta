@@ -1,0 +1,43 @@
+@startuml
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 60
+
+package "Клієнтський інтерфейс" {
+  [Додаток клієнта] as ClientApp
+}
+
+package "ПіцеріяCatell" {
+  [Калькулятор цін] as Pricing
+  [Управління замовленнями] as OrderManager
+  [Обробка платежів] as PaymentProcessor
+  [Система трекінгу] as Tracking
+}
+
+package "Інтерфейс працівників" {
+  [Термінал кухаря] as ChefApp
+  [Додаток кур'єра] as CourierApp
+}
+
+package "Зовнішні сервіси" {
+  [Payment Gateway] as Gateway
+}
+
+' Приховані зв'язки для вирівнювання блоків на схемі
+Pricing -[hidden]right- OrderManager
+OrderManager -[hidden]right- PaymentProcessor
+
+ClientApp -down-> OrderManager : Створення замовлення\n(меню, кастомізація)
+OrderManager -left-> Pricing : Запит розрахунку
+Pricing -up-> ClientApp : Фінальна ціна
+
+ClientApp -down-> PaymentProcessor : Ініціалізація оплати
+PaymentProcessor -down-> Gateway : Проведення транзакції
+PaymentProcessor -left-> OrderManager : Статус оплати
+
+OrderManager -down-> ChefApp : Передача на кухню
+ChefApp -right-> Tracking : Статус приготування
+CourierApp -up-> Tracking : Статус доставки
+Tracking -up-> ClientApp : Відображення\nстану замовлення
+@enduml
