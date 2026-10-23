@@ -1,0 +1,66 @@
+@startuml
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam nodesep 120
+skinparam ranksep 130
+
+package "Клієнтський інтерфейс" {
+  [Кабінет клієнта] as Client
+}
+
+package "Інтерфейс персоналу" {
+  [Адмін] as Admin
+  [Сіттер] as Sitter
+  [Ветеринар] as Vet
+}
+
+package "Сервіс перетримки котиків" {
+  [Модуль реєстрації] as RegModule
+  [Модуль бронювання] as BookingModule
+  [Модуль розрахунку ціни] as PriceModule
+  [Модуль оплати] as PaymentModule
+  [Модуль моніторингу] as TrackingModule
+  [Модуль медогляду] as HealthModule
+}
+
+package "Зовнішні сервіси та БД" {
+  [Платіжний шлюз] as Gateway
+  database "База даних" as DB
+}
+
+Client -[hidden]right- Admin
+Admin -[hidden]right- Sitter
+Sitter -[hidden]right- Vet
+
+RegModule -[hidden]right- BookingModule
+BookingModule -[hidden]right- PriceModule
+PriceModule -[hidden]right- PaymentModule
+PaymentModule -[hidden]right- TrackingModule
+TrackingModule -[hidden]right- HealthModule
+
+Gateway -[hidden]right- DB
+
+' Зв'язки Клієнта
+Client -down-> RegModule : Реєстрація кота
+Client -down-> BookingModule : Створення броні
+BookingModule -right-> PriceModule : Запит розрахунку
+PriceModule -up-> Client : Фінальна ціна
+Client -down-> PaymentModule : Оплата (аванс/фінал)
+TrackingModule -up-> Client : Фото та відеозвіти
+
+' Зв'язки Персоналу
+Admin -down-> BookingModule : Чек-ін тварини
+Sitter -down-> TrackingModule : Щоденний звіт
+Vet -down-> HealthModule : Запис медогляду
+
+' Зв'язки з БД та Платіжним шлюзом
+PaymentModule -down-> Gateway : Транзакція
+PaymentModule -left-> BookingModule : Підтвердження оплати
+
+RegModule -down-> DB : Профіль кота
+BookingModule -down-> DB : Дані броні
+PaymentModule -down-> DB : Історія платежів
+TrackingModule -down-> DB : Медіазвіти
+HealthModule -down-> DB : Медична картка
+
+@enduml
