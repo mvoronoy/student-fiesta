@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Emoji
+
+interface EmojiDraw <<Flyweight>> {
+ draw(Emoji)
+}
+
+class DrawFactory{
+    getDraw():EmojiDraw
+}
+
+
+EmojiDraw <|- Emoji
+EmojiDraw <|--MyImplementationOfEmojiDraw
+DrawFactory -> EmojiDraw
+
+class MyImplementationOfEmojiDraw{
+ draw(Emoji)
+}
+DrawFactory ..> MyImplementationOfEmojiDraw
+@enduml
