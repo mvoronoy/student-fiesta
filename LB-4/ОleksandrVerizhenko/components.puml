@@ -1,0 +1,65 @@
+@startuml
+
+package "Client Layer" {
+    [Web / Mobile UI] as ClientUI
+}
+
+package "Backend Services" {
+    [Order Service] as OrderService
+    [Pricing & Discount Engine] as PriceEngine
+    [Tracking Service] as TrackService
+    [Payment Gateway Interface] as PaymentInterface
+}
+
+package "External Systems" {
+    [LiqPay / Stripe] as PaymentSystem
+}
+
+database "Pizza DB" {
+    [Menu & Ingredients] as MenuDB #Yellow
+
+    [Orders DB] as OrderDB #Yellow
+}
+
+' Зв'язки між компонентами
+ClientUI ..[thickness=3]> OrderService :up: [HTTP / REST API(Створення замовлення)]
+
+ClientUI ..[thickness=3]..> PriceEngine : HTTP / REST API (Розрахунок вартості)
+ClientUI ..[thickness=3]..> TrackService : WebSocket / HTTP (Відстеження стану)
+
+ClientUI ..[thickness=3]..> PaymentInterface : HTTP / REST API (Оплата)
+
+OrderService ---> MenuDB : Читання інгредієнтів
+OrderService ----> OrderDB : Запис замовлення
+
+PriceEngine --> MenuDB : Розрахунок кастомної піци
+
+TrackService --> OrderDB : Зчитування статусу замовлення
+
+PaymentInterface -l-> PaymentSystem : Обробка транзакцій
+PaymentInterface --> OrderDB : Оновлення статусу оплати
+
+note bottom  of PriceEngine #lightcyan
+  1. Інгредієнти та доставка:
+     користувач обирає склад та адресу.
+  2. Ціна: Engine калькулює
+     фінальну вартість у реальному часі.
+end note
+
+note bottom of TrackService #lightcyan
+  3. Стан замовлення:
+     відображення статусів
+     (Прийнято -> Готується -> В дорозі).
+end note
+
+note bottom of PaymentInterface #lightcyan
+  4. Оплата: інтеграція
+     із платіжною системою.
+end note
+
+note bottom of OrderService #lightcyan
+  1. Замовлення:
+     користувач обирає склад
+     інгредієнтів та тип доставки.
+end note
+@enduml
