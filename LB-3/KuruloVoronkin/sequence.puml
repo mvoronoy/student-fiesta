@@ -1,0 +1,37 @@
+@startuml
+@startuml
+autonumber
+actor "Покупець" as Customer
+actor "Кухар" as Cook
+participant "Гриль" as Grill
+participant "Робочий стіл" as Desk
+participant "Прес-гриль" as Press
+
+Customer -> Cook : Замовляє фірмову шаурму (з куркою та часниковим соусом)
+activate Cook
+
+Cook -> Grill : Зрізає підсмажене куряче м'ясо
+activate Grill
+Grill --> Cook : Нарізане гаряче м'ясо
+deactivate Grill
+
+Cook -> Desk : Розгортає свіжий лаваш
+activate Desk
+Cook -> Desk : Наносить часниковий соус на лаваш
+Cook -> Desk : Викладає м'ясо та нарізані овочі (капуста, огірки, томати. цибуля, морква)
+Cook -> Desk : Загортає лаваш
+Desk --> Cook : Загорнута шаурма готова до обсмажування
+deactivate Desk
+
+Cook -> Press : Поміщає шаурму в прес-гриль для хрусткої скоринки
+activate Press
+Press --> Cook : Обсмажена хрустка шаурма
+deactivate Press
+
+Cook -> Desk : Загортає шаурму в пергамент та серветку
+Cook --> Customer : Видає готову гарячу шаурму
+deactivate Cook
+
+Customer -> Customer : Насолоджується смачною шаурмою
+@enduml
+@enduml

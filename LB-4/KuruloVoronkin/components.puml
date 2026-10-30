@@ -1,0 +1,36 @@
+@startuml
+package "Client Layer" {
+    [Mobile App / Web UI] as UI
+}
+
+package "Pizza Ordering System" {
+    [Order Component] as OrderComp
+    [Menu & Ingredient Configurator] as ConfigComp
+    [Pricing & Calculation Engine] as PriceComp
+    [Status Tracking Component] as StatusComp
+    [Delivery Management Component] as DeliveryComp
+}
+
+package "External Services" {
+    [Payment Gateway] as PaymentGateway
+}
+
+database "System Database" {
+    [Database] as DB
+}
+
+' Інтерфейси та зв'язки між компонентами
+UI --> ConfigComp : 1. Вибір інгредієнтів та параметрів доставки
+ConfigComp --> PriceComp : 2. Запит на розрахунок вартості
+PriceComp --> UI : 3. Відображення деталізованої ціни
+
+UI --> OrderComp : 4. Підтвердження та створення замовлення
+OrderComp --> PaymentGateway : 5. Перенаправлення на оплату
+PaymentGateway --> OrderComp : 6. Статус успішної оплати
+
+OrderComp --> StatusComp : 7. Оновлення стану (Прийнято / Готується)
+DeliveryComp --> StatusComp : 8. Оновлення стану доставки (В дорозі / Доставлено)
+StatusComp --> UI : 9. Відображення поточного стану замовлення
+
+OrderComp ..> DB : Збереження даних замовлення
+@enduml
