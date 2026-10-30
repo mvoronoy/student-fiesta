@@ -19,5 +19,5 @@ end note
 
 grill --> cook: Шаурма готова (з'явилась скоринка)
 deactivate grill
-cook -> cook: їсти)
+cook -> cook: Упакувати в папір / пакет
 @enduml
