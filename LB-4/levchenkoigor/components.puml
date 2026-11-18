@@ -1,0 +1,73 @@
+@startuml
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 70
+skinparam ranksep 70
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam roundCorner 12
+
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #455A64
+  FontStyle bold
+}
+skinparam package {
+  FontStyle bold
+  FontSize 14
+}
+skinparam ArrowColor #37474F
+skinparam ArrowFontSize 12
+skinparam ArrowFontColor #263238
+
+title Component diagram: сервіс замовлення піци\n
+
+' ===== Клієнтська частина =====
+package "Клієнтський інтерфейс" #E3F2FD {
+  [Додаток клієнта] as ClientApp
+}
+
+' ===== Ядро системи =====
+package "Піцерія" #FFF8E1 {
+  [Калькулятор цін] as Pricing
+  [Управління замовленнями] as OrderManager
+  [Обробка платежів] as PaymentProcessor
+  [Система трекінгу] as Tracking
+}
+
+' ===== Працівники =====
+package "Інтерфейс працівників" #E8F5E9 {
+  [Термінал кухаря] as ChefApp
+  [Додаток кур'єра] as CourierApp
+}
+
+' ===== Зовнішні системи =====
+package "Зовнішні сервіси" #F3E5F5 {
+  [Payment Gateway] as Gateway
+}
+
+' ===== Вирівнювання блоків =====
+Pricing -[hidden]right- OrderManager
+OrderManager -[hidden]right- PaymentProcessor
+ChefApp -[hidden]right- Tracking
+Tracking -[hidden]right- CourierApp
+
+' ===== 1. Замовлення та ціна =====
+ClientApp -down-> OrderManager : **1.** Створення замовлення\n(меню, кастомізація, доставка)
+OrderManager -left-> Pricing : **2.** Запит розрахунку ціни
+Pricing -up-> ClientApp : **3.** Фінальна ціна
+
+' ===== 2. Оплата =====
+ClientApp -down-> PaymentProcessor : **4.** Ініціалізація оплати
+PaymentProcessor -right-> Gateway : **5.** Проведення\nтранзакції
+PaymentProcessor -left-> OrderManager : **6.** Статус оплати
+
+' ===== 3. Виконання та стан =====
+OrderManager -down-> ChefApp : **7.** Передача на кухню
+ChefApp -right-> Tracking : **8.** Статус\nприготування
+CourierApp -left-> Tracking : **9.** Статус\nдоставки
+Tracking -up-> ClientApp : **10.** Відображення стану\nзамовлення
+
+
+@enduml
