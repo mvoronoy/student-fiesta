@@ -1,0 +1,69 @@
+@startuml
+title Приготування шаурми
+
+actor "Клієнт" as client
+actor "Кухар" as cook
+participant "Лаваш" as lavash
+participant "М'ясо (курка)" as meat
+participant "Овочі" as veggies
+participant "Соус" as sauce
+participant "Грильна поверхня" as grill
+participant "Фольга" as foil
+participant "Пакет" as bag
+
+client -> cook : Замовлення шаурми
+activate cook
+
+cook -> meat : Нарізати м'ясо зі шпиля
+activate meat
+meat --> cook : Нарізане м'ясо
+deactivate meat
+
+cook -> veggies : Нарізати огірки, помідори, капусту
+activate veggies
+veggies --> cook : Нарізані овочі
+deactivate veggies
+
+cook -> lavash : Розкласти лаваш
+activate lavash
+
+cook -> sauce : Взяти соус
+activate sauce
+sauce --> cook : Соус
+deactivate sauce
+
+cook -> lavash : Намазати соус
+cook -> lavash : Викласти м'ясо
+cook -> lavash : Додати овочі
+
+alt Клієнт просив гостру
+    cook -> lavash : Додати гострий соус
+else Звичайна
+    cook -> lavash : Без додаткового соусу
+end
+
+cook -> lavash : Загорнути шаурму
+lavash --> cook : Готовий рол
+deactivate lavash
+
+cook -> grill : Обсмажити рол
+activate grill
+grill --> cook : Рол із хрусткою скоринкою
+deactivate grill
+
+cook -> foil : Відірвати шматок фольги
+activate foil
+cook -> foil : Загорнути гарячу шаурму у фольгу
+foil --> cook : Шаурма у фользі
+deactivate foil
+
+cook -> bag : Покласти шаурму у пакет
+activate bag
+cook -> bag : Додати серветки
+bag --> cook : Упакована шаурма
+deactivate bag
+
+cook --> client : Видати упаковану шаурму
+deactivate cook
+
+@enduml
