@@ -1,0 +1,86 @@
+@startuml
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam actorBorderColor #2C3E50
+skinparam actorBackgroundColor #ECF0F1
+skinparam usecase {
+  BackgroundColor #FFF8E1
+  BorderColor #F57C00
+  ArrowColor #455A64
+}
+skinparam rectangle {
+  BorderColor #F57C00
+  BackgroundColor #FFFDF5
+}
+
+title Use-Case діаграма: сервіс замовлення піци
+
+' ===== Актори =====
+actor "Клієнт" as Customer
+actor "Піцайоло" as Cook
+actor "Кур'єр" as Courier
+actor "Адміністратор" as Admin
+
+rectangle "Сервіс замовлення піци" {
+
+  ' ===== Клієнт =====
+  usecase "Переглянути меню" as UC_ViewMenu
+  usecase "Створити замовлення" as UC_CreateOrder
+  usecase "Оплатити замовлення" as UC_Pay
+  usecase "Кастомізувати піцу" as UC_Customize
+  usecase "Застосувати промокод" as UC_Promo
+  usecase "Скасувати замовлення" as UC_CancelOrder
+  usecase "Відстежувати доставку" as UC_Track
+
+  ' ===== Піцайоло =====
+  usecase "Прийняти замовлення до роботи" as UC_AcceptOrder
+  usecase "Замінити відсутні інгредієнти" as UC_ReplaceIngr
+  usecase "Позначити піцу готовою" as UC_MarkReady
+
+  ' ===== Кур'єр =====
+  usecase "Взяти замовлення на доставку" as UC_TakeDelivery
+  usecase "Оновити статус доставки" as UC_UpdateDelivery
+
+  ' ===== Адміністратор =====
+  usecase "Управляти меню" as UC_ManageMenu
+  usecase "Переглядати звіти" as UC_Reports
+}
+
+' ===== Успадкування акторів =====
+' Адміністратор має всі права Клієнта + свої
+Customer <|-- Admin
+
+' ===== Зв'язки акторів з use-case =====
+Customer --> UC_ViewMenu
+Customer --> UC_CreateOrder
+Customer --> UC_CancelOrder
+Customer --> UC_Track
+
+Cook --> UC_AcceptOrder
+Cook --> UC_ReplaceIngr
+Cook --> UC_MarkReady
+
+Courier --> UC_TakeDelivery
+Courier --> UC_UpdateDelivery
+
+Admin --> UC_ManageMenu
+Admin --> UC_Reports
+
+' ===== Залежності між use-case =====
+' include: обов'язкова частина
+UC_CreateOrder ..> UC_Pay : <<include>>
+
+' extend: необов'язкові доповнення
+UC_Customize ..> UC_CreateOrder : <<extend>>
+UC_Promo ..> UC_CreateOrder : <<extend>>
+UC_ReplaceIngr ..> UC_AcceptOrder : <<extend>>
+
+note right of UC_Customize
+  Клієнт може змінити
+  інгредієнти або розмір
+end note
+
+@enduml
