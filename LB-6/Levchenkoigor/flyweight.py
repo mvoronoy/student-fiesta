@@ -3,7 +3,7 @@ import os
 
 DB_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "emoji.db")
 
-# Дані для створення emoji.db, якщо файлу ще немає
+# Дані для створення emoji.db
 DEFAULT_DATA = {
     "symbol-A": "😀", "symbol-B": "🚀", "symbol-C": "❤️", "symbol-D": "🔥",
     "symbol-E": "🎉", "symbol-F": "🌍", "symbol-G": "🐱", "symbol-H": "🐶",
@@ -17,7 +17,7 @@ DEFAULT_DATA = {
 
 
 class EmojiDatabase:
-    """Умовне сховище описів емодзі (текстовий файл формату id=символ)."""
+    """Умовне сховище описів емодзі"""
 
     def __init__(self, path=DB_FILE):
         self.path = path
