@@ -1,0 +1,26 @@
+@startuml purchase-ticket-state
+title Придбання квитка - діаграма станів
+
+left to right direction
+
+[*] --> Authentication
+
+state "Автентифікація" as Authentication
+state "Вибір місця" as SeatSelection
+state "Місця заброньовано" as Booked
+state "Оплата" as Payment
+state "Квиток придбано" as Purchased
+state "Бронювання скасовано" as Cancelled
+
+Authentication --> SeatSelection : дані коректні
+SeatSelection --> SeatSelection : вибрати місце
+SeatSelection --> Booked : забронювати місце(я) /\nвстановити таймер(15),\nпозначити як зайняте
+Booked --> Payment : почати оплату
+Payment --> Payment : перенаправлення до банку,\nпідтвердження від банку
+Payment --> Purchased : оплачено /\nпозначити як куплене,\nпідтвердження (Email)
+Booked --> Cancelled : час вичерпано (15 хв)
+Payment --> Cancelled : час вичерпано (15 хв)
+Cancelled --> [*] : позначити як доступне
+Purchased --> [*]
+
+@enduml
