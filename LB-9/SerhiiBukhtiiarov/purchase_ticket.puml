@@ -1,0 +1,43 @@
+@startuml
+title Діаграма станів процесу купівлі квитків
+
+[*] --> Unauthenticated
+
+state "Unauthenticated" as Unauthenticated
+state "Authenticating" as Authenticating
+state "Authenticated (Browsing)" as Browsing
+state "Selecting seat" as Selecting
+
+state "Occupied (Reserved)" as Occupied {
+    state "Waiting for Payment" as Waiting
+    state "Processing Payment" as Processing
+
+    [*] --> Waiting
+    Waiting --> Processing : Start payment / redirect to Bank
+    Processing --> Waiting : Payment failed or cancelled
+}
+
+state "Bought" as Bought
+
+Unauthenticated --> Authenticating : Authentication Request
+
+Authenticating --> Browsing : Validate user info [valid]
+Authenticating --> Unauthenticated : Validate user info [invalid]
+
+Browsing --> Selecting : Select seating place
+Selecting --> Browsing : Cancel selection
+Selecting --> Occupied : Book place(s) / setTimeout(15), markOccupied
+
+Processing --> Bought : Bank confirm / markBought, sendEmail
+
+Occupied --> Browsing : Timer timeout [15 min] / cancel, markAvailable
+
+Browsing --> [*] : Leave
+Bought --> [*]
+
+note right of Occupied
+  Таймер (15 хв) діє на весь стан Occupied,
+  у тому числі під час Processing.
+end note
+
+@enduml
