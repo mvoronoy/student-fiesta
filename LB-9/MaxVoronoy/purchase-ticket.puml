@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "User"
+participant "Планета Кіно" as C
+participant "Security Service" as Sec
+participant "Booking" as B
+participant "Timer"
+participant "Payment Service" as P
+database "Store" as db
+participant "Bank" as bank
+== Authentication ==
+
+User -> Sec: Authentication Request
+Sec -> db: Validate user info
+
+== Reservation ==
+activate B
+
+User -> B: Select seating place
+User -> B: Book place(s)
+B->Timer: Set timeout(15)
+B->db: Mark occupied
+deactivate B
+
+== Purchase ==
+activate P
+User->P: start payment
+P->bank: redirect
+bank --> P: confirm
+P->db: Mark bought
+P-->User: confirm (Email)
+deactivate P
+
+== No Purchase ==
+activate B
+Timer [#red]->B:Cancel
+B [#red]->db: Mark available
+deactivate B
+
+@enduml
