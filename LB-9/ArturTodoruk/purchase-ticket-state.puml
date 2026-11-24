@@ -1,0 +1,40 @@
+@startuml purchase-ticket-state
+title Діаграма стану процесу придбання квитків
+
+state "Unauthenticated" as Unauthenticated
+
+state "Authenticated" as Authenticated {
+  state "Browsing hall layout" as Browsing
+  [*] --> Browsing
+}
+
+state "Seat selected" as SeatSelected
+
+state "Reserved" as Reserved {
+  state "Waiting for payment (15 min timer)" as Waiting
+  [*] --> Waiting
+}
+
+state "Payment redirect" as PaymentRedirect {
+  state "Payment processing" as Processing
+  [*] --> Processing
+}
+
+state "Ticket bought" as Bought
+state "Cancelled" as Cancelled
+
+[*] --> Unauthenticated : Open page / Request
+
+Unauthenticated --> Authenticated : Authentication request\n/ Validate user info
+Authenticated --> SeatSelected : Select seating place
+SeatSelected --> Reserved : Book place(s)\n/ Set timeout(15), Mark occupied
+Reserved --> PaymentRedirect : Start payment\n/ Redirect to bank
+PaymentRedirect --> Bought : Confirm (from Bank)\n/ Mark bought, Send email
+
+Reserved --> Cancelled : [Timeout 15 min] Cancel\n/ Mark available
+PaymentRedirect --> Cancelled : [Timeout 15 min / Bank error] Cancel\n/ Mark available
+
+Bought --> [*]
+Cancelled --> [*]
+
+@enduml
