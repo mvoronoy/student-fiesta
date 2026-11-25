@@ -1,0 +1,41 @@
+@startuml
+
+title Діаграма станів процесу купівлі квитка
+
+[*] --> Unauthenticated
+
+state "Неавторизований" as Unauthenticated
+state "Авторизація" as Authenticating
+state "Перегляд сеансів" as Browsing
+state "Вибір місця" as Selecting
+
+state "Місце заброньовано" as Reserved {
+    state "Очікування оплати" as Waiting
+    state "Обробка платежу" as Processing
+
+    [*] --> Waiting
+
+    Waiting --> Processing : Почати оплату
+    Processing --> Waiting : Оплату скасовано
+}
+
+state "Квиток придбано" as Bought
+
+Unauthenticated --> Authenticating : Запит авторизації
+
+Authenticating --> Browsing : Дані підтверджено
+Authenticating --> Unauthenticated : Помилка авторизації
+
+Browsing --> Selecting : Обрати місце
+Selecting --> Browsing : Скасувати вибір
+
+Selecting --> Reserved : Забронювати місце\nтаймер 15 хв
+
+Processing --> Bought : Оплату підтверджено
+
+Reserved --> Browsing : Таймаут 15 хв\nмісце звільнено
+
+Browsing --> [*] : Вийти
+Bought --> [*]
+
+@enduml
