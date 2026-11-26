@@ -1,0 +1,39 @@
+@startuml
+title Ticket Purchase - State Diagram
+
+[*] --> Authentication : Authentication Request
+
+Authentication : entry / Validate user info
+Authentication --> SeatSelection : [user info valid]
+
+SeatSelection --> SeatsSelected : Select seating place
+
+state "Active reservation" as Reservation {
+    [*] --> Booked
+
+    state "Seats booked" as Booked
+    state "Payment in progress" as Payment
+
+    Booked --> Payment : Start payment
+    Payment : entry / Redirect to Bank
+}
+
+Reservation : entry / Set timeout
+Reservation : entry / Mark seats occupied
+
+SeatsSelected --> Reservation : Book place(s)
+
+state "Purchased" as Purchased
+state "Reservation cancelled" as Cancelled
+
+Payment --> Purchased : Bank confirms payment
+Purchased : entry / Mark seats bought
+Purchased : entry / Send confirmation email
+
+Reservation --> Cancelled : after (15 min) / Cancel booking
+Cancelled : entry / Mark seats available
+
+Purchased --> [*]
+Cancelled --> [*]
+
+@enduml
