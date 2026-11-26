@@ -1,0 +1,74 @@
+@startuml purchase-ticket-state
+title Діаграма станів системи: процес покупки квитків (Планета Кіно)
+
+skinparam state {
+  BackgroundColor #E8E8F8
+  BorderColor #444444
+  ArrowColor #222222
+}
+
+state "Квиток придбано" as Completed
+Completed : Квиток придбано,\nпідтвердження надіслано на Email
+
+state "Автентифікацію відхилено" as AuthFailed
+
+state "Автентифікація" as Authentication {
+  state "Отримано дані користувача" as CredentialsReceived
+  state "Перевірка даних" as Validating
+  state "Користувача автентифіковано" as Authenticated
+
+  [*] --> CredentialsReceived : 1. Запит автентифікації
+  CredentialsReceived --> Validating : 2. Перевірка даних користувача (Сховище)
+  Validating --> Authenticated : дані коректні
+  Authenticated --> [*]
+}
+
+state "Бронювання" as Reservation {
+  state "Місця обрано" as PlacesSelected
+  state "Місця заброньовано" as PlacesReserved
+
+  [*] --> PlacesSelected : 3. Вибір місць
+  PlacesSelected --> PlacesReserved : 4. Бронювання місць
+  PlacesReserved : entry / 5. Встановити таймаут(15) (Таймер)
+  PlacesReserved : entry / 6. Позначити як зайняті (Сховище)
+}
+
+state "Купівля" as Purchase {
+  state "Оплату розпочато" as PaymentInitiated
+  state "Очікування відповіді банку" as AwaitingBankConfirmation
+  state "Оплату підтверджено" as PaymentConfirmed
+  state "Квиток позначено купленим" as TicketBought
+
+  [*] --> PaymentInitiated : 7. Початок оплати
+  PaymentInitiated --> AwaitingBankConfirmation : 8. Перенаправлення
+  AwaitingBankConfirmation --> PaymentConfirmed : 9. Підтвердження (Банк)
+  PaymentConfirmed --> TicketBought : 10. Позначити як куплене (Сховище)
+  TicketBought --> [*] : 11. Підтвердження (Email)
+}
+
+state "Купівлю не завершено" as NoPurchase {
+  state "Бронювання скасовано" as ReservationCancelled
+  state "Місця вільні" as PlacesAvailable
+
+  [*] --> ReservationCancelled : 12. Скасування (Таймер → Бронювання)
+  ReservationCancelled --> PlacesAvailable : 13. Позначити як вільні (Сховище)
+  PlacesAvailable --> [*]
+}
+
+[*] --> Authentication
+
+Validating --> AuthFailed : дані некоректні
+AuthFailed --> Authentication : повторна спроба
+AuthFailed --> [*] : скасування
+
+Authentication --> Reservation : користувач автентифікований
+PlacesReserved --> Purchase : оплату розпочато
+PlacesReserved --> NoPurchase : таймаут (15 хв)
+
+AwaitingBankConfirmation --> NoPurchase : таймаут / відмова банку
+
+Purchase --> Completed : квиток придбано
+Completed --> [*]
+NoPurchase --> [*]
+
+@enduml
