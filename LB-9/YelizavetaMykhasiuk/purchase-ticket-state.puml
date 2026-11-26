@@ -1,0 +1,28 @@
+@startuml
+[*] --> UserAuth
+UserAuth --> SeatSelection : AuthSucceeded
+SeatSelection --> PreBooking : BookingRequested
+
+state PreBooking {
+ state Timer
+  state Reserved
+  state PaymentProcessing
+  [*] --> Reserved
+  Reserved --> Timer
+  Timer :  StartBookingTimer(15m)
+  Timer :  StopBookingTimer()
+  Timer --> PaymentProcessing : StartPayment
+  PaymentProcessing : RedirectToBank()
+Reserved : ChangeStatus(taken)
+}
+
+PaymentProcessing --> Paid : PaymentConfirmed
+Timer --> Canceled : [timeout 15m]
+Timer --> Canceled : CancelBooking()
+Canceled :  ChangeStatus(free)
+
+Paid : ChangeStatus(bought)
+Paid : SendEmailConfirmation()
+Paid --> [*]
+Canceled --> [*]
+@enduml
