@@ -1,0 +1,23 @@
+@startuml
+title Purchase ticket state diagram
+
+[*] --> Authentication
+
+Authentication --> SeatSelection : user is valid
+Authentication --> [*] : user is not valid
+
+SeatSelection --> Booked : book places
+
+Booked --> WaitingPayment : start payment
+
+WaitingPayment --> Purchased : bank confirmed
+WaitingPayment --> Cancelled : timeout 15 min
+
+Booked --> Cancelled : timeout 15 min
+
+Purchased --> EmailSent : send confirm email
+EmailSent --> [*]
+
+Cancelled --> SeatsReleased : mark seats available
+SeatsReleased --> [*]
+@enduml
